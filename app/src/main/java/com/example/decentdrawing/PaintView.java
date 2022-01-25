@@ -13,10 +13,12 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PaintView extends View {
 
@@ -72,12 +74,17 @@ public class PaintView extends View {
         currentColor = COLOR_PEN;
     }
 
+    public void changeBrushColor(String color) {
+        currentColor = Color.parseColor(color);
+        mPaint.setColor(currentColor);
+    }
+
     public void changeMode(int input) {
         mode = input;
     }
 
     public void pen(){
-        currentColor = COLOR_PEN;
+        //currentColor = COLOR_PEN;
     }
 
     public void eraser(){
@@ -107,6 +114,11 @@ public class PaintView extends View {
     }
 
     private void touchStart(float x, float y){
+        if (MainActivity.EraserMode) {
+            BRUSH_SIZE = 40;
+        } else {
+            BRUSH_SIZE = 10;
+        }
         mPath = new Path();
         FingerPath fp = new FingerPath(currentColor, BRUSH_SIZE, mPath);
         paths.add(fp);
@@ -147,7 +159,7 @@ public class PaintView extends View {
                     p1.x = (int) x;
                     p1.y = (int) y;
                     final int sourceColor = mBitmap.getPixel((int) x, (int) y);
-                    final int targetColor = mPaint.getColor();
+                    final int targetColor = currentColor;
                     new TheTask(mBitmap, p1, sourceColor, targetColor).execute();
                     invalidate();
                     break;
