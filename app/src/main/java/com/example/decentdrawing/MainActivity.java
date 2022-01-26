@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
         paintView = findViewById(R.id.paint_view);
         mText = findViewById(R.id.textView3);
         mText.setText("Voice Detection here.");
-        System.out.println("------------------------------");
-        System.out.println(mText);
-        System.out.println("------------------------------");
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -228,6 +227,33 @@ public class MainActivity extends AppCompatActivity {
                     paintView.changeBrushColor("white");
                 } else {
                     paintView.changeBrushColor(colors.get(0));
+                    // dispatch event
+                    // Obtain MotionEvent object
+                    long downTime = SystemClock.uptimeMillis();
+                    long eventTime = SystemClock.uptimeMillis() + 100;
+                    float x = paintView.currentX;
+                    float y = paintView.currentY;
+                    int metaState = 0;
+                    MotionEvent motionEvent = MotionEvent.obtain(
+                            downTime,
+                            eventTime,
+                            MotionEvent.ACTION_UP,
+                            x,
+                            y,
+                            metaState
+                    );
+                    paintView.dispatchTouchEvent(motionEvent);
+                    downTime = SystemClock.uptimeMillis();
+                    eventTime = SystemClock.uptimeMillis() + 1000;
+                    MotionEvent motionEvent2 = MotionEvent.obtain(
+                            downTime,
+                            eventTime,
+                            MotionEvent.ACTION_DOWN,
+                            x + 1,
+                            y + 1,
+                            metaState
+                    );
+                    paintView.dispatchTouchEvent(motionEvent2);
                 }
             } else {
                 Toast t = Toast.makeText(getApplicationContext(), "Multiple color detected. Please provide only one color in your sentence.", Toast.LENGTH_LONG);

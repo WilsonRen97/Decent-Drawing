@@ -22,10 +22,9 @@ import java.util.List;
 
 public class PaintView extends View {
 
-    public int BRUSH_SIZE = 10;
-    public static final int COLOR_PEN = Color.RED;
-    public static final int COLOR_ERASER = Color.WHITE;
-    public static final int DEFAULT_BG_COLOR = Color.WHITE;
+    private int BRUSH_SIZE = 10;
+    private static final int COLOR_PEN = Color.RED;
+    private static final int COLOR_ERASER = Color.WHITE;
     private static final float TOUCH_TOLERANCE = 4;
 
     private float mX, mY;
@@ -41,6 +40,9 @@ public class PaintView extends View {
     private ProgressDialog pd;
     private int mode = 1;
     private final Point p1 = new Point();
+    public float currentX;
+    public float currentY;
+
 
 
     public PaintView(Context context) {
@@ -148,6 +150,8 @@ public class PaintView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
+        currentX = x;
+        currentY = y;
 
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN :
@@ -219,4 +223,11 @@ public class PaintView extends View {
             invalidate();
         }
     }
+
+//    public float getCurrentX() {
+//        return currentX;
+//    }
+//    public float getCurrentY() {
+//        return currentY;
+//    }
 }
