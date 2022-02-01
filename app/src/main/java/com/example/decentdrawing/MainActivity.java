@@ -211,7 +211,12 @@ public class MainActivity extends AppCompatActivity {
                         currentString.equals("Phil")
                 ) {
                     paintView.changeMode(-1);
+                } else if (currentString.equals("pen")
+                        ||currentString.equals("pain")
+                        || currentString.equals("pane")) {
+                    paintView.changeMode(1);
                 }
+
                 if (currentString.equals("blue") ||
                         currentString.equals("black") ||
                         currentString.equals("cyan") ||
