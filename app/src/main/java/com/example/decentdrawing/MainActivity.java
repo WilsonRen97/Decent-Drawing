@@ -204,11 +204,11 @@ public class MainActivity extends AppCompatActivity {
                     colors.add(currentString);
                     paintView.changeMode(1);
                     EraserMode = true;
-                }
-                if (currentString.equals("fill") ||
-                        currentString.equals("feel") ||
+                } else if (currentString.equals("fill") ||
                         currentString.equals("fell") ||
-                        currentString.equals("fail")
+                        currentString.equals("feel") ||
+                        currentString.equals("fail") ||
+                        currentString.equals("Phil")
                 ) {
                     paintView.changeMode(-1);
                 }
@@ -236,31 +236,33 @@ public class MainActivity extends AppCompatActivity {
                     paintView.changeBrushColor(colors.get(0));
                     // dispatch event
                     // Obtain MotionEvent object
-                    long downTime = SystemClock.uptimeMillis();
-                    long eventTime = SystemClock.uptimeMillis() + 100;
-                    float x = paintView.currentX;
-                    float y = paintView.currentY;
-                    int metaState = 0;
-                    MotionEvent motionEvent = MotionEvent.obtain(
-                            downTime,
-                            eventTime,
-                            MotionEvent.ACTION_UP,
-                            x,
-                            y,
-                            metaState
-                    );
-                    paintView.dispatchTouchEvent(motionEvent);
-                    downTime = SystemClock.uptimeMillis();
-                    eventTime = SystemClock.uptimeMillis() + 1000;
-                    MotionEvent motionEvent2 = MotionEvent.obtain(
-                            downTime,
-                            eventTime,
-                            MotionEvent.ACTION_DOWN,
-                            x + 1,
-                            y + 1,
-                            metaState
-                    );
-                    paintView.dispatchTouchEvent(motionEvent2);
+                    if (paintView.mode > 0) {
+                        long downTime = SystemClock.uptimeMillis();
+                        long eventTime = SystemClock.uptimeMillis() + 100;
+                        float x = paintView.currentX;
+                        float y = paintView.currentY;
+                        int metaState = 0;
+                        MotionEvent motionEvent = MotionEvent.obtain(
+                                downTime,
+                                eventTime,
+                                MotionEvent.ACTION_UP,
+                                x,
+                                y,
+                                metaState
+                        );
+                        paintView.dispatchTouchEvent(motionEvent);
+                        downTime = SystemClock.uptimeMillis();
+                        eventTime = SystemClock.uptimeMillis() + 1000;
+                        MotionEvent motionEvent2 = MotionEvent.obtain(
+                                downTime,
+                                eventTime,
+                                MotionEvent.ACTION_DOWN,
+                                x + 1,
+                                y + 1,
+                                metaState
+                        );
+                        paintView.dispatchTouchEvent(motionEvent2);
+                    }
                 }
             } else {
                 Toast t = Toast.makeText(getApplicationContext(), "Multiple color detected. Please provide only one color in your sentence.", Toast.LENGTH_LONG);

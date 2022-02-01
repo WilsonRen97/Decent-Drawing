@@ -38,7 +38,7 @@ public class PaintView extends View {
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
     private ProgressDialog pd;
-    private int mode = 1;
+    public int mode = 1;
     private final Point p1 = new Point();
     public float currentX;
     public float currentY;
