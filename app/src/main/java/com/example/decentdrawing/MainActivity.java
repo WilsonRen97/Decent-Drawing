@@ -205,6 +205,13 @@ public class MainActivity extends AppCompatActivity {
                     paintView.changeMode(1);
                     EraserMode = true;
                 }
+                if (currentString.equals("fill") ||
+                        currentString.equals("feel") ||
+                        currentString.equals("fell") ||
+                        currentString.equals("fail")
+                ) {
+                    paintView.changeMode(-1);
+                }
                 if (currentString.equals("blue") ||
                         currentString.equals("black") ||
                         currentString.equals("cyan") ||
