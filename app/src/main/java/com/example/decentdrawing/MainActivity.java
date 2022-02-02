@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "tryspeech";
     private String all = "";
     final Handler handler = new Handler();
-    final int delay = 3000; // 1000 milliseconds == 1 second
+    final int delay = 2000; // 1000 milliseconds == 1 second
     public static boolean EraserMode = false;
 
     @Override
@@ -129,67 +129,36 @@ public class MainActivity extends AppCompatActivity {
 
     class listener implements RecognitionListener
     {
-        public void onReadyForSpeech(Bundle params)
-        {
-            //Log.d(TAG, "on Ready ForSpeech");
-            // all = "Ready for speech. \n";
-            // all = "listening...";
-            mText.setText(all);
-            System.out.println(all);
-        }
         public void onBeginningOfSpeech()
         {
-            //Log.d(TAG, "on Beginning Of Speech");
-            // all += "Beginning of speech. \n";
-            //  = "Voice detected. \n";
-            // all = "listening...";
-            mText.setText(all);
-            System.out.println(all);
-        }
-        public void onRmsChanged(float rmsdB)
-        {
-            //Log.d(TAG, "on Rms Changed");
-            // all += "on Rms Changed \n";
-//            all += "Listening ... \n";
-//            // mText.setText(all);
-            System.out.println(all);
-        }
-        public void onBufferReceived(byte[] buffer)
-        {
-            //Log.d(TAG, "on Buffer Received");
-            // all = "on Buffer Received \n";
-            // all = "listening...";
-            // mText.setText(all);
-            System.out.println(all);
+            mText.setText("Start listening...");
+            System.out.println("Start listening...");
         }
         public void onEndOfSpeech()
         {
-            //Log.d(TAG, "on End of Speech");
-            //all = "End of speech \n";
-            // all = "listening...";
-            // mText.setText(all);
-            // System.out.println(all);
+            mText.setText("End listening...");
+            System.out.println("End listening...");
         }
-        public void onError(int error)
-        {
-            //Log.d(TAG,  "error " +  error);
-            // mText.setText("No voice detected.");
-            // all = "No voice detected... \n";a
-            // all = "listening...";
-            // mText.setText(all);
-            // System.out.println(all);
-        }
+        public void onRmsChanged(float rmsdB) {}
+        public void onBufferReceived(byte[] buffer) {}
+        public void onReadyForSpeech(Bundle params) {}
+        public void onError(int error) {}
+        public void onPartialResults(Bundle partialResults) {}
+        public void onEvent(int eventType, Bundle params) {}
+
         public void onResults(Bundle results)
         {
-            String str = new String();
-            //Log.d(TAG, "onResults " + results);
             ArrayList data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            for (int i = 0; i < data.size(); i++)
-            {
-                Log.d(TAG, "result " + data.get(i));
+
+            // we will get 5 different possible results
+            /*
+            for (int i = 0; i < data.size(); i++) {
+                System.out.println("result: " + data.get(i));
                 str += data.get(i);
             }
-            // mText.setText("results: "+String.valueOf(data.size()));
+            */
+
+            // here, we just take the first result
             all = String.valueOf(data.get(0));
             mText.setText(all);
             System.out.println(all);
@@ -208,13 +177,16 @@ public class MainActivity extends AppCompatActivity {
                         currentString.equals("fell") ||
                         currentString.equals("feel") ||
                         currentString.equals("fail") ||
-                        currentString.equals("Phil")
+                        currentString.equals("phil") ||
+                        currentString.equals("chill")
                 ) {
                     paintView.changeMode(-1);
                 } else if (currentString.equals("pen")
                         ||currentString.equals("pain")
                         || currentString.equals("pane")) {
                     paintView.changeMode(1);
+                    Toast t = Toast.makeText(getApplicationContext(), "Pen Active!", Toast.LENGTH_SHORT);
+                    t.show();
                 }
 
                 if (currentString.equals("blue") ||
@@ -232,14 +204,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             if (colors.size() == 0) {
-                Toast t = Toast.makeText(getApplicationContext(), "No color detected.", Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(getApplicationContext(), "No color detected.", Toast.LENGTH_LONG);
                 t.show();
             } else if (colors.size() == 1) {
                 if (colors.get(0).equals("eraser")) {
                     paintView.changeBrushColor("white");
                 } else {
                     paintView.changeBrushColor(colors.get(0));
-                    // dispatch event
+                    // dispatch event, so that we can change the pen color while we draw
                     // Obtain MotionEvent object
                     if (paintView.mode > 0) {
                         long downTime = SystemClock.uptimeMillis();
@@ -273,12 +245,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(getApplicationContext(), "Multiple color detected. Please provide only one color in your sentence.", Toast.LENGTH_LONG);
                 t.show();
             }
-        }
-        public void onPartialResults(Bundle partialResults) {
-            //Log.d(TAG, "onPartialResults");
-        }
-        public void onEvent(int eventType, Bundle params) {
-            //Log.d(TAG, "onEvent " + eventType);
         }
     }
 }

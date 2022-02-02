@@ -143,7 +143,10 @@ public class PaintView extends View {
     }
 
     private void touchUp(){
-        mPath.lineTo(mX, mY);
+        if (mPath != null) {
+            mPath.lineTo(mX, mY);
+        }
+
     }
 
     @Override
