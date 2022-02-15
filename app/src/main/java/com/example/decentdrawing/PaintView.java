@@ -226,11 +226,4 @@ public class PaintView extends View {
             invalidate();
         }
     }
-
-//    public float getCurrentX() {
-//        return currentX;
-//    }
-//    public float getCurrentY() {
-//        return currentY;
-//    }
 }

@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         paintView = findViewById(R.id.paint_view);
         mText = findViewById(R.id.textView3);
-        mText.setText("Voice Detection here.");
+        // mText.setText("Voice Detection here."); // Get This one back later
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -77,33 +77,37 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.options_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
+        // Get This one back later
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.options_menu, menu);
+//        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.pen :
-                paintView.changeMode(1); // this line is added for testing
-                paintView.pen();
-                Toast.makeText(this, "Pen Active!", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.eraser :
-                paintView.changeMode(-1);
-                Toast.makeText(this, "Fill Mode Active!", Toast.LENGTH_SHORT).show();
-                return true;
-
-            case R.id.clear :
-                paintView.clear();
-                Toast.makeText(this, "Canvas Empty!", Toast.LENGTH_SHORT).show();
-                return true;
-        }
-
-
-        return super.onOptionsItemSelected(item);
+        return true;
+        // Get This one back later
+//        switch (item.getItemId()){
+//            case R.id.pen :
+//                paintView.changeMode(1); // this line is added for testing
+//                paintView.pen();
+//                Toast.makeText(this, "Pen Active!", Toast.LENGTH_SHORT).show();
+//                return true;
+//
+//            case R.id.eraser :
+//                paintView.changeMode(-1);
+//                Toast.makeText(this, "Fill Mode Active!", Toast.LENGTH_SHORT).show();
+//                return true;
+//
+//            case R.id.clear :
+//                paintView.clear();
+//                Toast.makeText(this, "Canvas Empty!", Toast.LENGTH_SHORT).show();
+//                return true;
+//        }
+//
+//
+//        return super.onOptionsItemSelected(item);
     }
 
     private boolean isRecordAudioPermissionGranted()
@@ -131,12 +135,12 @@ public class MainActivity extends AppCompatActivity {
     {
         public void onBeginningOfSpeech()
         {
-            mText.setText("Start listening...");
+            // mText.setText("Start listening..."); // Get This one back later
             System.out.println("Start listening...");
         }
         public void onEndOfSpeech()
         {
-            mText.setText("End listening...");
+            // mText.setText("End listening..."); // Get This one back later
             System.out.println("End listening...");
         }
         public void onRmsChanged(float rmsdB) {}
@@ -160,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
             // here, we just take the first result
             all = String.valueOf(data.get(0));
-            mText.setText(all);
+            // mText.setText(all); // Get This one back later
             System.out.println(all);
 
             // making the string command change the pen color
