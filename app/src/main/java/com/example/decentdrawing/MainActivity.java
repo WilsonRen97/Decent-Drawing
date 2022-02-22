@@ -33,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "tryspeech";
     private String all = "";
     final Handler handler = new Handler();
-    final int delay = 2000; // 1000 milliseconds == 1 second
+    final int delay = 3000; // 1000 milliseconds == 1 second
     public static boolean EraserMode = false;
+    private listener lsner = new listener();
+    private boolean isWorking = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         sr = SpeechRecognizer.createSpeechRecognizer(this);
-        sr.setRecognitionListener(new listener());
+        sr.setRecognitionListener(lsner);
 
         setContentView(R.layout.activity_main);
 
@@ -69,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
 
                 intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,5);
-                sr.startListening(intent);
+                if (!isWorking) {
+                    sr.startListening(intent);
+                    System.out.println("Start Listening....");
+                }
                 handler.postDelayed(this, delay);
             }
         }, delay);
@@ -77,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
+         return true;
         // Get This one back later
 //        MenuInflater menuInflater = getMenuInflater();
 //        menuInflater.inflate(R.menu.options_menu, menu);
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return true;
+         return true;
         // Get This one back later
 //        switch (item.getItemId()){
 //            case R.id.pen :
@@ -105,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(this, "Canvas Empty!", Toast.LENGTH_SHORT).show();
 //                return true;
 //        }
-//
-//
+
+
 //        return super.onOptionsItemSelected(item);
     }
 
@@ -135,11 +140,13 @@ public class MainActivity extends AppCompatActivity {
     {
         public void onBeginningOfSpeech()
         {
+            isWorking = true;
             // mText.setText("Start listening..."); // Get This one back later
             System.out.println("Start listening...");
         }
         public void onEndOfSpeech()
         {
+            isWorking = false;
             // mText.setText("End listening..."); // Get This one back later
             System.out.println("End listening...");
         }
@@ -152,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
         public void onResults(Bundle results)
         {
+            isWorking = false;
             ArrayList data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
             // we will get 5 different possible results
