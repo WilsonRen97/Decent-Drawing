@@ -90,13 +90,19 @@ public class PaintView extends View {
     }
 
     public void eraser(){
-        currentColor = COLOR_ERASER;
     }
 
     public void clear(){
         paths.clear();
-        pen();
-        invalidate();
+        int width = mBitmap.getWidth();
+        int height = mBitmap.getHeight();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                mBitmap.setPixel(i, j, Color.WHITE);
+            }
+            invalidate();
+        }
+
     }
 
     @Override

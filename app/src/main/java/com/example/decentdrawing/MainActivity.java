@@ -181,6 +181,9 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> colors = new ArrayList<>();
             for (int i = 0; i < commandString.length; i++) {
                 String currentString = commandString[i].toLowerCase();
+                if (currentString.equals("clear")) {
+                    paintView.clear();
+                }
                 if (currentString.equals("eraser")){
                     colors.add(currentString);
                     paintView.changeMode(1);
