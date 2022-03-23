@@ -138,6 +138,23 @@ public class MainActivity extends AppCompatActivity {
 
     class listener implements RecognitionListener
     {
+        private String parseColor(String color) {
+            if (color.equals("blue") || color.equals("blu")) {
+                return "blue";
+            } else if (
+                color.equals("green") || color.equals("queen") || color.equals("ring")
+            ) {
+                return "green";
+            } else if (
+                color.equals("red") || color.equals("read") || color.equals("lead")) {
+                return "red";
+            } else if (
+                color.equals("jello") || color.equals("mellow") || color.equals("yellow")) {
+                return "yellow";
+            } else {
+                return color;
+            }
+        }
         public void onBeginningOfSpeech()
         {
             isWorking = true;
@@ -184,7 +201,12 @@ public class MainActivity extends AppCompatActivity {
                 if (currentString.equals("clear")) {
                     paintView.clear();
                 }
-                if (currentString.equals("eraser")){
+                if (currentString.equals("eraser")
+                        || currentString.equals("erase")
+                        || currentString.equals("chaser")
+                        || currentString.equals("tracer")
+                        || currentString.equals("spacer")
+                ){
                     colors.add(currentString);
                     paintView.changeMode(1);
                     EraserMode = true;
@@ -205,14 +227,21 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (currentString.equals("blue") ||
+                        currentString.equals("blu") ||
                         currentString.equals("black") ||
                         currentString.equals("cyan") ||
                         currentString.equals("gray") ||
                         currentString.equals("green") ||
+                        currentString.equals("queen") ||
+                        currentString.equals("ring") ||
                         currentString.equals("magenta") ||
                         currentString.equals("orange") ||
                         currentString.equals("red") ||
+                        currentString.equals("read") ||
+                        currentString.equals("lead") ||
                         currentString.equals("white") ||
+                        currentString.equals("jello") ||
+                        currentString.equals("mellow") ||
                         currentString.equals("yellow")) {
                     colors.add(currentString);
                     EraserMode = false;
@@ -225,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                 if (colors.get(0).equals("eraser")) {
                     paintView.changeBrushColor("white");
                 } else {
-                    paintView.changeBrushColor(colors.get(0));
+                    paintView.changeBrushColor(parseColor(colors.get(0)));
                     // dispatch event, so that we can change the pen color while we draw
                     // Obtain MotionEvent object
                     if (paintView.mode > 0) {
